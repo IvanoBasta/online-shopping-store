@@ -30,6 +30,10 @@
 <!-- Bootstrap Readable Theme -->
 <link href="${css}/bootstrap-readable-theme.css" rel="stylesheet">
 
+
+<!-- Bootstrap Readable Theme -->
+<link href="${css}/bootstrap-readable-theme.css" rel="stylesheet">
+
 <!-- Custom styles for this template -->
 <link href="${css}/myapp.css" rel="stylesheet">
 
@@ -59,6 +63,11 @@
 			<c:if test="${userClickContact == true }">
 				<%@include file="contact.jsp"%>
 			</c:if>
+			
+			<!-- Load only when user clicks contact -->
+			<c:if test="${userClickAllProducts == true or userClickCategoryProducts == true}">
+				<%@include file="listProducts.jsp"%>
+			</c:if>
 
 		</div>
 
@@ -70,7 +79,7 @@
 		<script src="${js}/bootstrap.min.js"></script>
 
 		<!-- Self coded javascript -->
-		<script src="${js}/myapp.js"></script>
+		<script src="${js}/myfunction.js"></script>
 
 	</div>
 
