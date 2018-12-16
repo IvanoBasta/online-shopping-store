@@ -1,23 +1,37 @@
 package net.idj.onlineshoppingstore.controller;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import ner.idj.shoppingbackend.dto.Category;
+import net.idj.onlineshoppingstore.exception.ProductNotFoundException;
 import net.idj.shoppingbackend.dao.CategoryDAO;
+import net.idj.shoppingbackend.dao.ProductDAO;
+import net.idj.shoppingbackend.dto.Category;
+import net.idj.shoppingbackend.dto.Product;
 
 @Controller
 public class PageController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(PageController.class);
 
 	@Autowired
 	private CategoryDAO categoryDao;
+	
+	@Autowired
+	private ProductDAO productDao;
 
 	@RequestMapping(value = { "/", "/home", "/index" })
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView("page");
 		mv.addObject("title", "Home");
+		
+		logger.info("Inside PageController index method - INFO");
+		logger.info("Inside PageController index method - DEBUG");
+		
 		// passing the list of cateogries
 		mv.addObject("categories", categoryDao.list());
 		mv.addObject("userClickHome", true);
@@ -93,6 +107,29 @@ public class PageController {
 		
 		mv.addObject("userClickCategoryProducts", true);
 		return mv;
-	}
+	} 
 
+	/*Viewing a single product*/
+	
+	@RequestMapping(value = "/show/{id}/product")
+	public ModelAndView showSingleProductPage(@PathVariable int id) throws ProductNotFoundException {
+		ModelAndView mv = new ModelAndView("page");
+		
+		Product product = productDao.get(id);
+		
+		if(product == null) throw new ProductNotFoundException();
+		
+		//update the view count	
+		product.setViews(product.getViews()+1);	
+		productDao.update(product);
+		//----------------------------------------
+			
+		mv.addObject("title", product.getName());
+		mv.addObject("product", product);
+		
+		mv.addObject("userClickShowProduct", true);
+		
+		return mv;
+	}
+	
 }
