@@ -21,7 +21,7 @@ public class PageController {
 	@Autowired
 	private CategoryDAO categoryDao;
 	
-	@Autowired
+	@Autowired 
 	private ProductDAO productDao;
 
 	@RequestMapping(value = { "/", "/home", "/index" })
