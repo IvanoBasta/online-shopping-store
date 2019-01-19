@@ -9,8 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,11 +30,15 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String code;
+	@NotBlank(message = "Please enter the product name")
 	private String name;
+	@NotBlank(message = "Please enter the brand name")
 	private String brand;
 	@JsonIgnore
+	@NotBlank(message = "Please enter the description for Product")
 	private String description;
 	@Column(name = "unit_price")
+	@Min(value=1, message="The price cannot be less then 1")
 	private double unitPrice;
 	private int quantity;
 	@Column(name = "is_active")	
@@ -52,6 +60,15 @@ public class Product implements Serializable {
 		
 	}
 	
+	@Transient
+	private MultipartFile file;
+	
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 	// setters and getters	
 	public int getId() {
 		return id;
@@ -131,7 +148,6 @@ public class Product implements Serializable {
 	}
 
 	
-	// toString for debugging
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", code=" + code + ", name=" + name + ", brand=" + brand + ", description="
