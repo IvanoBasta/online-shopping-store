@@ -10,6 +10,17 @@
 	</div>
 	</c:if>
 	
+	<c:if test="${not empty messageField}">
+	<div class="col-xs-12">
+		<div class="alert alert-warning alert-dismissible">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			${messageField}			
+		</div>
+	</div>
+	</c:if>
+	
+	
+	
 	
 		<div class="com-md-offset-2 col-md-8">
 			<div class="panel panel-primary">
@@ -22,7 +33,6 @@
 					action="${contextRoot}/manage/products"
 					method="POST"
 					enctype="multipart/form-data">
-					
 
 						<div class="form-group">
 							<label class="control-label col-md-4" for="name">Enter Product Name: </label>
@@ -83,6 +93,14 @@
 								itemLabel="name"
 								itemValue="id"
 								/>
+								
+								<c:if test="${product.id == 0}">
+									<div class="text-right">
+										<br/>
+										<button type="button" data-toggle="modal" data-target="#myCategoryModal" class ="btn-warning btn-xs">Add Category</button>
+									</div>
+								</c:if>
+								
 							</div>
 
 						</div>
@@ -91,7 +109,7 @@
 
 							<div class="col-md-8">
 
-								<input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary"></input>
+								<input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info"></input>
 								
 								<!-- Hidden fields for products -->
 								
@@ -125,13 +143,14 @@
 		
 		<div class="col-lg-12">
 			<div style="overflow:auto">
-				<table id="productsTable" class="table table-condensed table-bordered">
+				<table id="adminProductsTable" class="table table-condensed table-bordered">
 							
 				<thead>					
 					<tr>					
 						<th>Id</th>
 						<th>&#160;</th>
 						<th>Name</th>
+						<th>Brand</th>
 						<th>Qty. Avail</th>
 						<th>Unit Price</th>
 						<th>Activate</th>				
@@ -139,63 +158,14 @@
 					</tr>					
 				</thead>
 				
-				<tbody>
-					<tr>
-						<td>4</td>
-						<td>
-							<img class="adminDataTableImg" alt="Macbook Pro" src="${contextRoot}/resources/images/PRDMNO123PQRX.jpg"/>
-							
-						</td>
-						<td>Macbook Pro</td>
-						<td>3</td>
-						<td>&#8360; 54000.00/-</td>
-						<td>
-							<!-- toggle Switch -->
-							<label class="switch">
-								<input type="checkbox" checked value="4">
-								<span class="slider round"></span>
-							</label>
-						</td>
-						<td>
-						
-							<a href="${contextRoot}/manage/4/product" class="btn btn-warning">
-								<span class="glyphicon glyphicon-pencil"></span>
-							</a>
-						
-						</td>
-					</tr>
-					
-										<tr>
-						<td>4</td>
-						<td>
-							<img class="adminDataTableImg" alt="Macbook Pro" src="${contextRoot}/resources/images/PRDMNO123PQRX.jpg"/>
-							
-						</td>
-						<td>Macbook Pro</td>
-						<td>3</td>
-						<td>&#8360; 54000.00/-</td>
-						<td>
-							<!-- toggle Switch -->
-							<label class="switch">
-								<input type="checkbox" value="4">
-								<span class="slider round"></span>
-							</label>
-						</td>
-						<td>
-							<a href="${contextRoot}/manage/4/product" class="btn btn-warning">
-								<span class="glyphicon glyphicon-pencil"></span>
-							</a>
-						
-						</td>
-					</tr>
 				
-				</tbody>
 				
 				<tfoot>
 					<tr>					
 						<th>Id</th>
 						<th>&#160;</th>
 						<th>Name</th>
+						<th>Brand</th>
 						<th>Qty. Avail</th>
 						<th>Unit Price</th>
 						<th>Activate</th>				
@@ -209,4 +179,48 @@
 	
 		
 	</div>
+	
+	<!-- Modal -->
+
+	<div class="modal fade" id="myCategoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      	<h4 class="modal-title" id="myModalLabel">New Category</h4>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	      </div>
+	      <div class="modal-body">
+	       	
+	       	<!-- Category form -->
+	        <sf:form id="categoryForm" class="form-horizontal" modelAttribute="category" action="${contextRoot}/manage/category" method="POST">
+	        	
+       			<div class="form-group">
+					<label class="control-label col-md-4">Name</label>
+					<div class="col-md-8 validate">
+						<sf:input type="text" path="name" class="form-control"
+							placeholder="Category Name" /> 
+					</div>
+				</div>
+       			
+       			<div class="form-group">				
+					<label class="control-label col-md-4">Description</label>
+					<div class="col-md-8 validate">
+						<sf:textarea path="description" class="form-control"
+							placeholder="Enter category description here!" /> 
+					</div>
+				</div>	        	        
+	        
+	        
+				<div class="form-group">				
+					<div class="col-md-offset-4 col-md-4">					
+						<input type="submit" name="submit" value="Save" class="btn btn-primary"/>						
+					</div>
+				</div>	        
+	        </sf:form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
 </div>

@@ -51,6 +51,7 @@
 						
 						<tfoot>
 							<tr>
+								<th>Code</th>
 								<th>Name</th>
 								<th>Brand</th>
 								<th>Price</th>

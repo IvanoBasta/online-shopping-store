@@ -26,9 +26,10 @@ public class ProductValidator implements Validator {
 			return;
 		}
 		
-		if(! (product.getFile().getContentType().equals("image/png") ||
-			 product.getFile().getContentType().equals("image/jepg") ||
-			 product.getFile().getContentType().equals("image/gif"))
+		if(! (product.getFile().getContentType().equalsIgnoreCase("image/jpg") ||
+			 product.getFile().getContentType().equalsIgnoreCase("image/png") ||
+			 product.getFile().getContentType().equalsIgnoreCase("image/jpeg") ||
+			 product.getFile().getContentType().equalsIgnoreCase("image/gif"))
 		  )
 		{
 			errors.rejectValue("file", null, "Please use only image file for upload!");
