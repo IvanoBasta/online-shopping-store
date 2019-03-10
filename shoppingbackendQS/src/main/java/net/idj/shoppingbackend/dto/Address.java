@@ -7,43 +7,43 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 
 
 @Entity
 public class Address implements Serializable{
 	
-private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	// private fields
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	/*-------------------*/
-	@ManyToOne
-	private User user;
-	
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	/*----------------------*/
+	@Column(name = "user_id")
+	private int userId;
 	
 	@Column(name = "address_line_one")
+	@NotBlank(message = "Please enter address line one!")
 	private String addressLineOne;
+	
 	@Column(name = "address_line_two")
+	@NotBlank(message = "Please enter address line two!")
 	private String addressLineTwo;
-	@Column(name = "contact_number")
+	
+	@NotBlank(message = "Please enter city name!")
 	private String city;
+	
+	@NotBlank(message = "Please enter state name!")
 	private String state;
+	
+	@NotBlank(message = "Please enter country!")
 	private String country;
-	@Column(name="postal_code")
+	
+	@Column(name ="postal_code")	
+	@NotBlank(message = "Please enter postal code!")
 	private String postalCode;
+	
 	private boolean shipping;
 	private boolean billing;
 	
@@ -107,14 +107,24 @@ private static final long serialVersionUID = 1L;
 	public void setBilling(boolean billing) {
 		this.billing = billing;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	
 	/*
 	 * toString for logging and debugging activity
 	 */
 	
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", addressLineOne=" + addressLineOne + ", addressLineTwo=" + addressLineTwo
+				+ ", city=" + city + ", state=" + state + ", country=" + country + ", postalCode=" + postalCode
+				+ ", billing=" + billing + "]";
+	}
 
 	
 

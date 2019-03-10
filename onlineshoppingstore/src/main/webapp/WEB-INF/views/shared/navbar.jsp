@@ -25,8 +25,20 @@
               <a class="nav-link" href="${contextRoot}/manage/products">Manage Products</a>
             </li>
             
-            
           </ul>
+          
+          <ul class="nav navbar-nav navbar-right">
+          
+	          <li id="register" class="nav-item">
+	              <a class="nav-link" href="${contextRoot}/register">Sing Up</a>
+	          </li>
+	          
+	          <li id="login">
+              <a class="nav-link" href="${contextRoot}/login">Login</a>
+            </li>
+          
+          </ul>
+          
         </div>
         
       </div>
