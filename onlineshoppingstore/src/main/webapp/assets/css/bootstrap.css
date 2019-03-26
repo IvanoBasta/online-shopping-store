@@ -4836,6 +4836,19 @@ input[type="button"].btn-block {
   float: none;
 }
 
+@media (min-width: 768px) {
+  .navbar-left {
+    float: left !important;
+  }
+  .navbar-right {
+    float: right !important;
+    margin-right: -15px;
+  }
+  .navbar-right ~ .navbar-right {
+    margin-right: 0;
+  }
+}
+
 .navbar-text {
   display: inline-block;
   padding-top: 0.5rem;
